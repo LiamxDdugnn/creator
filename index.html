@@ -1,81 +1,63 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tạo Hạnh Phúc</title>
+  <title>Tạo Yêu Thương</title>
   <link rel="stylesheet" href="style/main.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GTY3RQNXTE"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-GTY3RQNXTE');
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <div class="container">
-    <a class="back-btn" href="/">← Về trang chủ</a>
-    <div class="header">
-      <h1>Gửi ngàn yêu thương</h1>
-      <p>hãy gửi những lời yêu thương của bạn vào vũ trụ</p>
-    </div>
-
-    <div class="form-container">
-      <form id="galaxyForm">
-        <div class="form-group">
-          <label for="messages">Tin nhắn của bạn (mỗi dòng một):</label>
-          <textarea id="messages" placeholder="I love you\nHappy Birthday..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Biểu tượng:</label>
-          <div class="icon-selector">
-            <div class="icon-option selected" data-icons='["♥","💖","💕","💗"]'>♥💖💕💗</div>
-            <div class="icon-option" data-icons='["🎉","🎂","🎈","🎊"]'>🎉🎂🎈🎊</div>
-          </div>
-          <input id="customIcons" placeholder="Hoặc nhập icon riêng: 🐱,🐶" />
-        </div>
-
-        <div class="form-group">
-          <label>Màu sắc:</label>
-          <input type="color" id="loveColor" value="#ff6b9d" />
-        </div>
-
-        <div class="form-group">
-          <label for="song">Chọn bài hát:</label>
-          <select id="song">
-            <option value="">-- Chọn --</option>
-            <option value="happy-birthday.mp3">Happy Birthday</option>
-          </select>
-          <input type="url" id="customSongUrl" placeholder="Hoặc nhập link nhạc" />
-          <button type="button" id="checkSongBtn">🔊 Nghe thử</button>
-          <audio id="customSongAudio" controls style="display:none"></audio>
-        </div>
-
-        <div class="form-group">
-          <label for="images">Chọn ảnh (tối đa 5):</label>
-          <input type="file" id="images" accept="image/*" multiple />
-          <div id="imagePreview"></div>
-        </div>
-
-        <button type="submit" class="btn" id="submitBtn">✨ Tạo yêu thương</button>
-      </form>
-
-      <div id="loading" class="loading">
-        <p>Đang tạo nhé...</p>
+    <h1>Gửi lời yêu thương ✨</h1>
+    <form id="galaxyForm">
+      <div class="form-group">
+        <label>Tin nhắn (mỗi dòng 1):</label>
+        <textarea id="messages" placeholder="Anh yêu em..."></textarea>
       </div>
 
+      <div class="form-group">
+        <label>Chọn icon hoặc nhập:</label>
+        <div class="icon-selector">
+          <div class="icon-option selected" data-icons='["💖","💗","💕","❤️"]'>💖💗💕❤️</div>
+          <div class="icon-option" data-icons='["🎉","🎂","🎈","🎊"]'>🎉🎂🎈🎊</div>
+        </div>
+        <input id="customIcons" placeholder="Hoặc nhập icon: 🐱,🌸,🍓" />
+      </div>
+
+      <div class="form-group">
+        <label>Chọn màu trái tim:</label>
+        <input type="color" id="loveColor" value="#ff6b9d" />
+      </div>
+
+      <div class="form-group">
+        <label>Bài hát (chọn hoặc nhập link):</label>
+        <select id="song">
+          <option value="">-- Chọn bài --</option>
+          <option value="happy-birthday.mp3">Happy Birthday</option>
+        </select>
+        <input type="url" id="customSongUrl" placeholder="https://..." />
+        <button type="button" id="checkSongBtn">🔊 Nghe thử</button>
+        <audio id="customSongAudio" controls style="display:none;"></audio>
+      </div>
+
+      <div class="form-group">
+        <label>Chọn ảnh (tối đa 5):</label>
+        <input type="file" id="images" accept="image/*" multiple />
+        <div id="imagePreview"></div>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">✨ Tạo yêu thương</button>
+
+      <div id="loading" style="display:none;margin-top:10px;">⏳ Đang tạo...</div>
       <div id="result" class="result">
-        <p>🎉 Oce rồi đấy!</p>
+        <p>🎉 Tạo thành công!</p>
         <div id="resultLink" class="result-link"></div>
         <button id="copyBtn" class="copy-btn">📋 Copy Link</button>
         <a id="viewBtn" class="btn" target="_blank">🌌 Xem kết quả</a>
         <div id="qrCode"></div>
       </div>
-    </div>
+    </form>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
