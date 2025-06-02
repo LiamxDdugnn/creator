@@ -1,22 +1,21 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import {
-  getFirestore, collection, addDoc
-} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-import {
-  getStorage, ref, uploadBytes, getDownloadURL
-} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDe3-vuNDGJ_DxXjRV4kX91cvUy9EXwFFo",
-  authDomain: "dearlove-demo.firebaseapp.com",
-  projectId: "dearlove-demo",
-  storageBucket: "dearlove-demo.appspot.com",
-  messagingSenderId: "469241383255",
-  appId: "1:469241383255:web:bc4e7e6f73e12aa1375d59"
+  apiKey: "AIzaSyBYCYLOUbgP3_PZrLDvNg-1_dm4vxcomKU",
+  authDomain: "liam-tdu.firebaseapp.com",
+  projectId: "liam-tdu",
+  storageBucket: "liam-tdu.firebasestorage.app",
+  messagingSenderId: "69285157804",
+  appId: "1:69285157804:web:4057dce4b8744414ddf809",
+  measurementId: "G-L42GYK7JMX"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
-
-export { db, collection, addDoc, storage, ref, uploadBytes, getDownloadURL };
+const analytics = getAnalytics(app);
