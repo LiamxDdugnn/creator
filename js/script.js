@@ -39,7 +39,6 @@ form.addEventListener("submit", async (e) => {
 
   const link = `${location.origin}/MuaDongToky.html?id=${docRef.id}`;
   resultLink.textContent = link;
-  resultLink.style.wordBreak = "break-all";
 
   // QR Code
   const qr = new QRCodeStyling({
