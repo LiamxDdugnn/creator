@@ -12,27 +12,17 @@ import {
   getDownloadURL
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
 
-// ✅ Thay thông tin bên dưới bằng thông tin thật từ Firebase của bạn
 const firebaseConfig = {
-  apiKey: "AIzaSyD_demo_key",
-  authDomain: "your-demo.firebaseapp.com",
-  projectId: "your-demo",
-  storageBucket: "your-demo.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:demoappid"
+  apiKey: "AIzaSyDe3-vuNDGJ_DxXjRV4kX91cvUy9EXwFFo",
+  authDomain: "dearlove-demo.firebaseapp.com",
+  projectId: "dearlove-demo",
+  storageBucket: "dearlove-demo.appspot.com",
+  messagingSenderId: "469241383255",
+  appId: "1:469241383255:web:bc4e7e6f73e12aa1375d59"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-// Export để dùng ở file script.js
-export {
-  db,
-  collection,
-  addDoc,
-  storage,
-  ref,
-  uploadBytes,
-  getDownloadURL
-};
+export { db, collection, addDoc, storage, ref, uploadBytes, getDownloadURL };
