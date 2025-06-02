@@ -50,7 +50,8 @@
       <button type="submit" class="btn" id="submitBtn">✨ Tạo yêu thương</button>
 
       <div id="loading" style="display:none;margin-top:10px;">⏳ Đang tạo...</div>
-      <div id="result" class="result">
+
+      <div id="result" style="display: none;" class="result">
         <p>🎉 Tạo thành công!</p>
         <div id="resultLink" class="result-link"></div>
         <button id="copyBtn" class="copy-btn">📋 Copy Link</button>
@@ -60,7 +61,10 @@
     </form>
   </div>
 
+  <!-- 🧩 Load thư viện QR Code Styling trước -->
   <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
-<script type="module" src="js/script.js"></script"></script>
+
+  <!-- ✅ Script chính dạng module -->
+  <script type="module" src="js/script.js"></script>
 </body>
 </html>
