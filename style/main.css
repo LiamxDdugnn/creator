@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(45deg, #ff6b9d, #4ecdc4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.form-container {
+  background: rgba(255,255,255,0.05);
+  padding: 2rem;
+  border-radius: 20px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+textarea,
+input,
+select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+.icon-selector {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.icon-option {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #4ecdc4;
+  cursor: pointer;
+}
+
+.icon-option.selected {
+  background-color: rgba(78, 205, 196, 0.2);
+}
+
+.btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(45deg, #ff6b9d, #4ecdc4);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+.result {
+  display: none;
+  margin-top: 2rem;
+  background: rgba(255,255,255,0.05);
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.result-link {
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.3);
+  padding: 0.5rem;
+  word-break: break-word;
+}
+
+.copy-btn {
+  border: 2px solid #4ecdc4;
+  background: transparent;
+  color: #4ecdc4;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+#imagePreview img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  margin-right: 8px;
+  object-fit: cover;
+}
