@@ -25,16 +25,6 @@ h1 {
   margin-bottom: 1rem;
 }
 
-.form-container {
-  background: rgba(255,255,255,0.05);
-  padding: 2rem;
-  border-radius: 20px;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
 textarea,
 input,
 select {
@@ -49,6 +39,10 @@ select {
 textarea {
   height: 120px;
   resize: vertical;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
 }
 
 .icon-selector {
