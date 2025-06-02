@@ -1,15 +1,9 @@
-// js/firebase-config.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import {
-  getFirestore,
-  collection,
-  addDoc
+  getFirestore, collection, addDoc
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
+  getStorage, ref, uploadBytes, getDownloadURL
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
 
 const firebaseConfig = {
