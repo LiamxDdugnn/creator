@@ -10,7 +10,7 @@ import {
 
 // Xử lý chọn icon
 const iconOptions = document.querySelectorAll('.icon-option');
-let selectedIcons = ["♥", "💖", "💕", "💗"];
+let selectedIcons = ["💖", "💗", "💕", "❤️"];
 const customIconsInput = document.getElementById('customIcons');
 
 iconOptions.forEach(option => {
@@ -28,23 +28,14 @@ customIconsInput.addEventListener('input', () => {
   }
 });
 
-// Color picker
-const colorInputs = document.querySelectorAll('input[type="color"]');
-colorInputs.forEach(input => {
-  input.addEventListener('change', (e) => {
-    const preview = e.target.parentElement.querySelector('.color-preview');
-    preview.style.background = e.target.value;
-  });
-});
-
 // Upload ảnh lên Cloudinary
 async function uploadImageToCloudinary(file) {
   const url = `https://api.cloudinary.com/v1_1/dtxohfp9j/image/upload`;
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', 'dear_love');
-  const response = await fetch(url, { method: 'POST', body: formData });
-  const data = await response.json();
+  const res = await fetch(url, { method: 'POST', body: formData });
+  const data = await res.json();
   return data.secure_url;
 }
 
@@ -62,29 +53,25 @@ document.getElementById('galaxyForm').addEventListener('submit', async (e) => {
   try {
     const messages = document.getElementById('messages').value
       .split('\n')
-      .filter(msg => msg.trim() !== '')
-      .map(msg => msg.trim());
+      .map(msg => msg.trim())
+      .filter(msg => msg !== '');
 
     let icons = selectedIcons;
     if (customIconsInput.value.trim() !== "") {
-      icons = customIconsInput.value.split(",").map(i => i.trim()).filter(i => i !== "");
+      icons = customIconsInput.value.split(',').map(i => i.trim()).filter(i => i !== "");
     }
 
     let imageUrls = [];
     if (imagesInput.files.length > 0) {
-      const uploadPromises = Array.from(imagesInput.files).slice(0, 5).map(file => uploadImageToCloudinary(file));
-      imageUrls = await Promise.all(uploadPromises);
+      const uploads = Array.from(imagesInput.files).slice(0, 5).map(file => uploadImageToCloudinary(file));
+      imageUrls = await Promise.all(uploads);
     }
 
     const galaxyData = {
       messages,
       icons,
       colors: {
-        love: document.getElementById('loveColor').value,
-        birthday: document.getElementById('birthdayColor').value,
-        date: document.getElementById('dateColor').value,
-        special: document.getElementById('specialColor').value,
-        heart: document.getElementById('heartColor').value
+        love: document.getElementById('loveColor').value
       },
       song: customSongUrl.value.trim() !== '' ? customSongUrl.value.trim() : songSelect.value,
       images: imageUrls,
@@ -93,7 +80,7 @@ document.getElementById('galaxyForm').addEventListener('submit', async (e) => {
 
     const docRef = await addDoc(collection(db, "galaxies"), galaxyData);
     const galaxyId = docRef.id;
-    const galaxyUrl = `${window.location.origin}/galaxy-viewer.html?id=${galaxyId}`;
+    const galaxyUrl = `${window.location.origin}/creator/MuaDongToky.html?id=${galaxyId}`;
 
     loading.style.display = 'none';
     result.style.display = 'block';
@@ -104,15 +91,29 @@ document.getElementById('galaxyForm').addEventListener('submit', async (e) => {
       navigator.clipboard.writeText(galaxyUrl);
     });
 
-  } catch (error) {
-    console.error('Lỗi:', error);
-    alert("Có lỗi xảy ra, thử lại nhé!");
+    const qrCode = new QRCodeStyling({
+      width: 160,
+      height: 160,
+      data: galaxyUrl,
+      dotsOptions: {
+        color: "#ff6b9d",
+        type: "rounded"
+      },
+      backgroundOptions: {
+        color: "transparent"
+      }
+    });
+    qrCode.append(document.getElementById("qrCode"));
+
+  } catch (err) {
+    console.error(err);
+    alert("Có lỗi xảy ra!");
   }
 
   submitBtn.disabled = false;
 });
 
-// Hiển thị ảnh preview
+// Preview ảnh
 const imagesInput = document.getElementById('images');
 const imagePreview = document.getElementById('imagePreview');
 imagesInput.addEventListener('change', () => {
@@ -128,41 +129,63 @@ imagesInput.addEventListener('change', () => {
   });
 });
 
-// Nhạc
+// Nhạc nghe thử
 const songSelect = document.getElementById('song');
 const customSongUrl = document.getElementById('customSongUrl');
 const checkSongBtn = document.getElementById('checkSongBtn');
 const customSongAudio = document.getElementById('customSongAudio');
-const previewDefaultSongBtn = document.getElementById('previewDefaultSongBtn');
-
-songSelect.addEventListener('change', () => {
-  if (songSelect.value) {
-    customSongUrl.value = '';
-    customSongAudio.style.display = 'none';
-    customSongAudio.pause();
-  }
-});
-
-customSongUrl.addEventListener('input', () => {
-  if (customSongUrl.value.trim() !== '') {
-    songSelect.value = '';
-  }
-  customSongAudio.style.display = 'none';
-  customSongAudio.pause();
-});
 
 checkSongBtn.addEventListener('click', () => {
   const url = customSongUrl.value.trim();
-  if (!url) return alert('Vui lòng nhập link nhạc!');
+  if (!url) return alert('Nhập link nhạc!');
   customSongAudio.src = url;
   customSongAudio.style.display = 'block';
+  customSongAudio.autoplay = true;
   customSongAudio.play().catch(() => alert('Không phát được!'));
 });
 
-previewDefaultSongBtn.addEventListener('click', () => {
-  const selectedSong = songSelect.value;
-  if (!selectedSong) return alert('Chọn bài hát trước!');
-  customSongAudio.src = `songs/${selectedSong}`;
-  customSongAudio.style.display = 'block';
-  customSongAudio.play().catch(() => alert('Không phát được!'));
-});
+// Hiệu ứng icon rơi theo biểu tượng người dùng chọn
+function createFallingIcons() {
+  let getIcons = () => {
+    const iconsFromInput = customIconsInput.value.trim();
+    if (iconsFromInput) {
+      return iconsFromInput.split(',').map(i => i.trim()).filter(i => i !== '');
+    }
+    const selected = document.querySelector('.icon-option.selected');
+    return selected ? JSON.parse(selected.dataset.icons) : ["💖", "💕", "💗", "💘"];
+  };
+
+  setInterval(() => {
+    const icons = getIcons();
+    if (icons.length === 0) return;
+
+    const icon = document.createElement('div');
+    icon.className = 'falling-icon';
+    icon.innerText = icons[Math.floor(Math.random() * icons.length)];
+    icon.style.position = 'fixed';
+    icon.style.left = Math.random() * 100 + 'vw';
+    icon.style.top = '-40px';
+    icon.style.fontSize = `${18 + Math.random() * 10}px`;
+    icon.style.opacity = 0.8;
+    icon.style.animation = `fall ${3 + Math.random() * 2}s linear`;
+    document.body.appendChild(icon);
+    setTimeout(() => icon.remove(), 6000);
+  }, 400);
+}
+
+// CSS animation icon rơi
+const style = document.createElement('style');
+style.textContent = `
+@keyframes fall {
+  to { transform: translateY(110vh); opacity: 0; }
+}
+.falling-icon {
+  pointer-events: none;
+  z-index: 9999;
+  animation-fill-mode: forwards;
+  position: fixed;
+}
+`;
+document.head.appendChild(style);
+
+createFallingIcons();
