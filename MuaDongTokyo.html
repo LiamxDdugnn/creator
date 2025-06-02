@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galaxy Viewer</title>
+  <style>
+    body {
+      background: radial-gradient(#0f2027, #203a43, #2c5364);
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    .message {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+      background: rgba(255,255,255,0.05);
+      padding: 10px;
+      border-radius: 10px;
+    }
+    img {
+      width: 150px;
+      border-radius: 12px;
+      margin: 10px;
+    }
+    audio {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌌 Galaxy của bạn</h1>
+    <p id="status">Đang tải dữ liệu...</p>
+    <div id="messages"></div>
+    <div id="images"></div>
+    <audio id="audio" controls></audio>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDe3-vuNDGJ_DxXjRV4kX91cvUy9EXwFFo",
+      authDomain: "dearlove-demo.firebaseapp.com",
+      projectId: "dearlove-demo",
+      storageBucket: "dearlove-demo.appspot.com",
+      messagingSenderId: "469241383255",
+      appId: "1:469241383255:web:bc4e7e6f73e12aa1375d59"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    const statusEl = document.getElementById('status');
+    const msgEl = document.getElementById('messages');
+    const imgEl = document.getElementById('images');
+    const audio = document.getElementById('audio');
+
+    if (!id) {
+      statusEl.textContent = "Không tìm thấy ID.";
+    } else {
+      const docRef = doc(db, "galaxies", id);
+      getDoc(docRef).then(docSnap => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          statusEl.style.display = 'none';
+
+          // Hiển thị tin nhắn
+          data.messages.forEach(msg => {
+            const div = document.createElement('div');
+            div.className = 'message';
+            div.textContent = msg;
+            msgEl.appendChild(div);
+          });
+
+          // Hiển thị ảnh
+          if (data.images) {
+            data.images.forEach(url => {
+              const img = document.createElement('img');
+              img.src = url;
+              imgEl.appendChild(img);
+            });
+          }
+
+          // Nhạc
+          if (data.song) {
+            audio.src = data.song.includes('http') ? data.song : `songs/${data.song}`;
+          }
+
+        } else {
+          statusEl.textContent = "Không tìm thấy dữ liệu.";
+        }
+      }).catch(err => {
+        console.error(err);
+        statusEl.textContent = "Lỗi khi tải dữ liệu.";
+      });
+    }
+  </script>
+</body>
+</html>
